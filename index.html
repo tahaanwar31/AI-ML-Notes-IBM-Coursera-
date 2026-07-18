@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ML Notes — Field Notes by Taha Anwar</title>
+<meta name="description" content="A practical, hands-on reference for machine learning models, built while completing an ML course.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <span class="mark">ML Notes</span>
+    <span class="mark-sub">by Taha Anwar</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#finder" class="nav-link" data-target="finder">Model Finder</a>
+    <a href="#intro" class="nav-link" data-target="intro">01 — Foundations</a>
+    <a href="#regression" class="nav-link" data-target="regression">02 — Regression</a>
+    <a href="#supervised" class="nav-link" data-target="supervised">03 — Supervised</a>
+    <a href="#unsupervised" class="nav-link" data-target="unsupervised">04 — Unsupervised</a>
+    <a href="#evaluation" class="nav-link" data-target="evaluation">05 — Evaluation</a>
+    <a href="#project" class="nav-link" data-target="project">06 — Applied Project</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <button id="download-all" class="btn-ghost">↓ all code samples</button>
+  </div>
+</aside>
+
+<button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">☰</button>
+
+<!-- ===== MAIN ===== -->
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">A learning log, made useful</div>
+    <h1 class="hero-title">Machine Learning,<br><span>indexed and rebuilt.</span></h1>
+    <p class="hero-sub">Six modules of lecture notes, cheat sheets, and a Titanic survival project — condensed into one working reference. Every algorithm here comes with the code that actually runs it.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">15+</span><span class="stat-label">models covered</span></div>
+      <div class="stat"><span class="stat-num">6</span><span class="stat-label">modules</span></div>
+      <div class="stat"><span class="stat-num">30+</span><span class="stat-label">runnable snippets</span></div>
+    </div>
+  </section>
+
+  <!-- MODEL FINDER — signature interactive element -->
+  <section class="finder" id="finder">
+    <div class="finder-head">
+      <span class="section-eyebrow">Start here</span>
+      <h2>What are you trying to do?</h2>
+      <p class="finder-sub">Answer two questions, get pointed at the right family of models.</p>
+    </div>
+
+    <div class="finder-controls">
+      <div class="finder-group">
+        <span class="finder-label">Is your data labeled?</span>
+        <div class="pill-row" id="pill-labeled">
+          <button class="pill active" data-val="yes">Yes, it's labeled</button>
+          <button class="pill" data-val="no">No labels</button>
+        </div>
+      </div>
+      <div class="finder-group">
+        <span class="finder-label">What's the output?</span>
+        <div class="pill-row" id="pill-output">
+          <button class="pill active" data-val="category">A category</button>
+          <button class="pill" data-val="number">A number</button>
+          <button class="pill" data-val="groups">Natural groupings</button>
+          <button class="pill" data-val="fewer-dims">Fewer dimensions</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="finder-result" id="finder-result">
+      <!-- populated by JS -->
+    </div>
+  </section>
+
+  <!-- 01 FOUNDATIONS -->
+  <section class="module" id="intro">
+    <div class="module-head">
+      <span class="section-eyebrow">01 — Foundations</span>
+      <h2>What ML is, and what it's made of</h2>
+    </div>
+
+    <div class="note-grid">
+      <div class="note-card">
+        <h3>AI vs. ML</h3>
+        <p>AI simulates human cognition broadly. ML is narrower: algorithms that learn patterns from data via feature engineering, rather than being explicitly programmed.</p>
+      </div>
+      <div class="note-card">
+        <h3>Three flavors of learning</h3>
+        <p><strong>Supervised</strong> — learns from labeled data.<br><strong>Unsupervised</strong> — finds structure in unlabeled data.<br><strong>Semi-supervised</strong> — trains on a small labeled subset plus a large unlabeled pool.</p>
+      </div>
+      <div class="note-card">
+        <h3>Four core tasks</h3>
+        <p><strong>Classification</strong> — sort into categories.<br><strong>Regression</strong> — predict a number.<br><strong>Clustering</strong> — group without labels.<br><strong>Anomaly detection</strong> — flag what doesn't fit (fraud, defects).</p>
+      </div>
+      <div class="note-card">
+        <h3>Picking a technique</h3>
+        <p>Comes down to four things: the problem type, the data you actually have, your compute/resource budget, and what outcome you need — interpretable? fast? maximally accurate?</p>
+      </div>
+    </div>
+
+    <h3 class="subhead">The toolkit</h3>
+    <div class="tool-table">
+      <div class="tool-row tool-row-head">
+        <span>Layer</span><span>Tools</span><span>Used for</span>
+      </div>
+      <div class="tool-row"><span>Languages</span><span>Python, R, Julia, Scala, Java, JS</span><span>Python → general ML; R → stats; Julia/Scala → performance; JS → in-browser models</span></div>
+      <div class="tool-row"><span>Numerical / data</span><span>NumPy, Pandas, SciPy</span><span>Array math, data wrangling, scientific computing</span></div>
+      <div class="tool-row"><span>Classical ML</span><span>Scikit-learn</span><span>Classification, regression, clustering, preprocessing, evaluation</span></div>
+      <div class="tool-row"><span>Deep learning</span><span>TensorFlow, Keras, PyTorch, Theano</span><span>Neural nets — vision, NLP</span></div>
+      <div class="tool-row"><span>NLP</span><span>NLTK, TextBlob, Stanza</span><span>Text processing, sentiment, parsing</span></div>
+      <div class="tool-row"><span>Visualization</span><span>Matplotlib, Seaborn, ggplot2, Tableau</span><span>Plots, layered graphics, dashboards</span></div>
+    </div>
+  </section>
+
+  <!-- 02 REGRESSION -->
+  <section class="module" id="regression">
+    <div class="module-head">
+      <span class="section-eyebrow">02 — Regression</span>
+      <h2>Linear &amp; logistic regression</h2>
+    </div>
+
+    <div class="model-card" data-code="simple-linear">
+      <div class="model-card-top">
+        <h3>Simple Linear Regression</h3>
+        <span class="tag">one predictor</span>
+      </div>
+      <p class="model-eq">y = b<sub>0</sub> + b<sub>1</sub>x</p>
+      <p>Predicts a continuous target from a single input. Fast and interpretable, but underfits anything nonlinear.</p>
+      <div class="code-block">
+        <div class="code-block-head"><span>python</span><button class="copy-btn">copy</button></div>
+        <pre><code>from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(X, y)</code></pre>
+      </div>
+    </div>
+
+    <div class="model-card" data-code="polynomial">
+      <div class="model-card-top">
+        <h3>Polynomial Regression</h3>
+        <span class="tag">curved relationships</span>
+      </div>
+      <p class="model-eq">y = b<sub>0</sub> + b<sub>1</sub>x + b<sub>2</sub>x² + ...</p>
+      <p>Use when the relationship clearly bends. Watch for overfitting as the degree climbs.</p>
+      <div class="code-block">
+        <div class="code-block-head"><span>python</span><button class="copy-btn">copy</button></div>
+        <pre><code>from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+
+poly = PolynomialFeatures(degree=2)
+X_poly = poly.fit_transform(X)
+model = LinearRegression().fit(X_poly, y)</code></pre>
+      </div>
+    </div>
+
+    <div class="model-card" data-code="multiple-linear">
+      <div class="model-card-top">
+        <h3>Multiple Linear Regression</h3>
+        <span class="tag">several predictors</span>
+      </div>
+      <p class="model-eq">y = b<sub>0</sub> + b<sub>1</sub>x<sub>1</sub> + b<sub>2</sub>x<sub>2</sub> + ...</p>
+      <p>Same idea as simple linear regression, scaled to multiple inputs. Assumes the relationship is still linear.</p>
+      <div class="code-block">
+        <div class="code-block-head"><span>python</span><button class="copy-btn">copy</button></div>
+        <pre><code>from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(X, y)  # X has multiple columns</code></pre>
+      </div>
+    </div>
+
+    <div class="model-card" data-code="logistic">
+      <div class="model-card-top">
+        <h3>Logistic Regression</h3>
+        <span class="tag">binary classification</span>
+      </div>
+      <p class="model-eq">log(p / (1-p)) = b<sub>0</sub> + b<sub>1</sub>x<sub>1</sub> + ...</p>
+      <p>Predicts the probability of a categorical outcome. The workhorse baseline for binary classification.</p>
+      <div class="code-block">
+        <div class="code-block-head"><span>python</span><button class="copy-btn">copy</button></div>
+        <pre><code>from sklearn.linear_model import LogisticRegression
+model = LogisticRegression()
+model.fit(X, y)</code></pre>
+      </div>
+    </div>
+
+    <h3 class="subhead">Supporting functions</h3>
+    <div class="func-grid">
+      <div class="func-card">
+        <h4>train_test_split</h4>
+        <p>Splits data into train/test sets.</p>
+        <pre><code>from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42)</code></pre>
+      </div>
+      <div class="func-card">
+        <h4>StandardScaler</h4>
+        <p>Zero mean, unit variance.</p>
+        <pre><code>from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)</code></pre>
+      </div>
+      <div class="func-card">
+        <h4>Regression metrics</h4>
+        <p>MAE, MSE, RMSE, R².</p>
+        <pre><code>from sklearn.metrics import (mean_absolute_error,
+    mean_squared_error, r2_score)
+mae = mean_absolute_error(y_true, y_pred)
+mse = mean_squared_error(y_true, y_pred)
+r2  = r2_score(y_true, y_pred)</code></pre>
+      </div>
+      <div class="func-card">
+        <h4>log_loss</h4>
+        <p>Classification loss metric.</p>
+        <pre><code>from sklearn.metrics import log_loss
+loss = log_loss(y_true, y_pred_proba)</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 SUPERVISED -->
+  <section class="module" id="supervised">
+    <div class="module-head">
+      <span class="section-eyebrow">03 — Supervised Learning</span>
+      <h2>Classifiers &amp; regressors</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table class="model-table">
+        <thead>
+          <tr><th>Model</th><th>Use when</th><th>Pros</th><th>Cons</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>One-vs-One (Logistic Reg.)</td><td>Small multiclass datasets</td><td>Works well on small data</td><td>Expensive at scale</td></tr>
+          <tr><td>One-vs-All (Logistic Reg.)</td><td>Multiclass, e.g. image labels</td><td>Simple, scalable</td><td>Weaker on imbalanced classes</td></tr>
+          <tr><td>Decision Tree Classifier</td><td>Need interpretable rules (credit risk)</td><td>Easy to read &amp; visualize</td><td>Overfits without pruning</td></tr>
+          <tr><td>Decision Tree Regressor</td><td>Nonlinear continuous targets</td><td>Handles nonlinearity</td><td>Overfits, noise-sensitive</td></tr>
+          <tr><td>Linear SVM</td><td>High-dimensional data (text, images)</td><td>Strong in high dimensions</td><td>Weak without a kernel on nonlinear data</td></tr>
+          <tr><td>K-Nearest Neighbors</td><td>Small data, recommendations</td><td>Simple, no training phase</td><td>Slow as data grows</td></tr>
+          <tr><td>Random Forest Regressor</td><td>Reduce overfitting vs. a single tree</td><td>Robust, less overfitting</td><td>Less interpretable, heavier</td></tr>
+          <tr><td>XGBoost Regressor</td><td>Need max accuracy, larger data</td><td>Very high accuracy</td><td>Slow to tune, compute-heavy</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-block" data-code="supervised-models">
+      <div class="code-block-head"><span>python — all supervised models</span><button class="copy-btn">copy</button></div>
+      <pre><code>from sklearn.multiclass import OneVsOneClassifier, OneVsRestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestRegressor
+import xgboost as xgb
+
+ovo   = OneVsOneClassifier(LogisticRegression())
+ova   = OneVsRestClassifier(LogisticRegression())
+dtc   = DecisionTreeClassifier(max_depth=5)
+dtr   = DecisionTreeRegressor(max_depth=5)
+svm   = SVC(kernel='linear', C=1.0)
+knn   = KNeighborsClassifier(n_neighbors=5, weights='uniform')
+rf    = RandomForestRegressor(n_estimators=100, max_depth=5)
+xgbm  = xgb.XGBRegressor(n_estimators=100, learning_rate=0.1, max_depth=5)</code></pre>
+    </div>
+
+    <h3 class="subhead">Supporting functions</h3>
+    <div class="func-grid">
+      <div class="func-card"><h4>OneHotEncoder</h4><p>Encode categorical features.</p>
+        <pre><code>from sklearn.preprocessing import OneHotEncoder
+enc = OneHotEncoder(sparse=False)
+encoded = enc.fit_transform(categorical_data)</code></pre></div>
+      <div class="func-card"><h4>LabelEncoder</h4><p>Encode target labels.</p>
+        <pre><code>from sklearn.preprocessing import LabelEncoder
+enc = LabelEncoder()
+y_enc = enc.fit_transform(labels)</code></pre></div>
+      <div class="func-card"><h4>accuracy_score / roc_auc_score</h4><p>Classifier scoring.</p>
+        <pre><code>from sklearn.metrics import accuracy_score, roc_auc_score
+acc = accuracy_score(y_true, y_pred)</code></pre></div>
+      <div class="func-card"><h4>plot_tree</h4><p>Visualize a decision tree.</p>
+        <pre><code>from sklearn.tree import plot_tree
+plot_tree(model, max_depth=3, filled=True)</code></pre></div>
+    </div>
+  </section>
+
+  <!-- 04 UNSUPERVISED -->
+  <section class="module" id="unsupervised">
+    <div class="module-head">
+      <span class="section-eyebrow">04 — Unsupervised Learning</span>
+      <h2>Clustering &amp; dimensionality reduction</h2>
+    </div>
+
+    <h3 class="subhead">Clustering</h3>
+    <div class="table-wrap">
+      <table class="model-table">
+        <thead><tr><th>Model</th><th>Use when</th><th>Key params</th></tr></thead>
+        <tbody>
+          <tr><td>K-Means</td><td>Roughly spherical clusters, you know k (customer segments)</td><td><code>n_clusters</code>, <code>init='k-means++'</code></td></tr>
+          <tr><td>DBSCAN</td><td>Unknown cluster count, arbitrary shapes, need outlier detection</td><td><code>eps</code>, <code>min_samples</code></td></tr>
+          <tr><td>HDBSCAN</td><td>Clusters of varying density</td><td><code>min_cluster_size</code>, <code>min_samples</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-block" data-code="clustering">
+      <div class="code-block-head"><span>python — clustering</span><button class="copy-btn">copy</button></div>
+      <pre><code>from sklearn.cluster import KMeans, DBSCAN
+import hdbscan
+
+kmeans = KMeans(n_clusters=3, init='k-means++', n_init=10)
+dbscan = DBSCAN(eps=0.5, min_samples=5)
+hdb    = hdbscan.HDBSCAN(min_cluster_size=5)</code></pre>
+    </div>
+
+    <h3 class="subhead">Dimensionality reduction</h3>
+    <div class="table-wrap">
+      <table class="model-table">
+        <thead><tr><th>Model</th><th>Use when</th><th>Key params</th></tr></thead>
+        <tbody>
+          <tr><td>PCA</td><td>Linear relationships, need interpretability / compression</td><td><code>n_components</code>, <code>svd_solver</code></td></tr>
+          <tr><td>t-SNE</td><td>Visualization, preserve local structure</td><td><code>perplexity</code>, <code>learning_rate</code></td></tr>
+          <tr><td>UMAP</td><td>Visualization, preserve local <em>and</em> global structure</td><td><code>n_neighbors</code>, <code>min_dist</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-block" data-code="dim-reduction">
+      <div class="code-block-head"><span>python — dimensionality reduction</span><button class="copy-btn">copy</button></div>
+      <pre><code>from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
+from umap.umap_ import UMAP
+
+pca  = PCA(n_components=2)
+tsne = TSNE(n_components=2, perplexity=30, learning_rate=200)
+umap = UMAP(n_neighbors=15, min_dist=0.1, n_components=2)</code></pre>
+    </div>
+
+    <h3 class="subhead">Supporting functions</h3>
+    <div class="func-grid">
+      <div class="func-card"><h4>make_blobs</h4><p>Synthetic clustering data.</p>
+        <pre><code>from sklearn.datasets import make_blobs
+X, y = make_blobs(n_samples=100, centers=2, random_state=42)</code></pre></div>
+      <div class="func-card"><h4>explained_variance_ratio_</h4><p>Variance per PCA component.</p>
+        <pre><code>pca.fit(X)
+ratio = pca.explained_variance_ratio_</code></pre></div>
+      <div class="func-card"><h4>plotly scatter_3d</h4><p>3D cluster visualization.</p>
+        <pre><code>import plotly.express as px
+fig = px.scatter_3d(df, x='x', y='y', z='z')
+fig.show()</code></pre></div>
+      <div class="func-card"><h4>GeoPandas</h4><p>Geospatial clustering.</p>
+        <pre><code>import geopandas as gpd
+gdf = gpd.GeoDataFrame(df, geometry='geometry')
+gdf = gdf.to_crs(epsg=3857)</code></pre></div>
+    </div>
+  </section>
+
+  <!-- 05 EVALUATION -->
+  <section class="module" id="evaluation">
+    <div class="module-head">
+      <span class="section-eyebrow">05 — Evaluation &amp; Validation</span>
+      <h2>Knowing if the model is actually good</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table class="model-table">
+        <thead><tr><th>Metric</th><th>For</th><th>Read it as</th></tr></thead>
+        <tbody>
+          <tr><td>classification_report</td><td>Classification</td><td>Precision / recall / F1 per class</td></tr>
+          <tr><td>confusion_matrix</td><td>Classification</td><td>TP / FP / TN / FN counts</td></tr>
+          <tr><td>MAE / MSE / RMSE</td><td>Regression</td><td>Lower is better; RMSE shares target's units</td></tr>
+          <tr><td>R² / explained variance</td><td>Regression</td><td>Higher is better — % of variance explained</td></tr>
+          <tr><td>silhouette_score</td><td>Clustering</td><td>-1 to 1, higher = better separated</td></tr>
+          <tr><td>davies_bouldin_score</td><td>Clustering</td><td>Lower is better</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-block" data-code="evaluation">
+      <div class="code-block-head"><span>python — evaluation metrics</span><button class="copy-btn">copy</button></div>
+      <pre><code>from sklearn.metrics import (classification_report, confusion_matrix,
+    mean_squared_error, mean_absolute_error, r2_score,
+    silhouette_score, davies_bouldin_score)
+
+report      = classification_report(y_true, y_pred, target_names=["class1","class2"])
+conf_matrix = confusion_matrix(y_true, y_pred)
+mse         = mean_squared_error(y_true, y_pred)
+mae         = mean_absolute_error(y_true, y_pred)
+r2          = r2_score(y_true, y_pred)
+sil         = silhouette_score(X, labels, metric='euclidean')
+dbi         = davies_bouldin_score(X, labels)</code></pre>
+    </div>
+
+    <h3 class="subhead">Picking k for K-Means</h3>
+    <p class="lead-p">Three ways to justify a cluster count instead of guessing it.</p>
+    <div class="func-grid">
+      <div class="func-card"><h4>Elbow method</h4><p>Plot inertia vs. k, pick the bend.</p>
+        <pre><code>inertias = []
+for k in range(2, 11):
+    km = KMeans(n_clusters=k, random_state=42).fit(X)
+    inertias.append(km.inertia_)</code></pre></div>
+      <div class="func-card"><h4>Silhouette method</h4><p>Pick k with the highest score.</p>
+        <pre><code>scores = []
+for k in range(2, 11):
+    labels = KMeans(n_clusters=k, random_state=42).fit_predict(X)
+    scores.append(silhouette_score(X, labels))</code></pre></div>
+      <div class="func-card"><h4>Davies-Bouldin</h4><p>Pick k with the lowest DBI.</p>
+        <pre><code>dbis = []
+for k in range(2, 11):
+    labels = KMeans(n_clusters=k, random_state=42).fit_predict(X)
+    dbis.append(davies_bouldin_score(X, labels))</code></pre></div>
+    </div>
+
+    <h3 class="subhead">Regularization &amp; tuning</h3>
+    <div class="code-block" data-code="regularization">
+      <div class="code-block-head"><span>python — Ridge, Lasso, Pipeline, GridSearchCV</span><button class="copy-btn">copy</button></div>
+      <pre><code>from sklearn.linear_model import Ridge, Lasso
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import GridSearchCV
+
+ridge = Ridge(alpha=1.0)   # L2 — shrinks coefficients
+lasso = Lasso(alpha=0.1)   # L1 — can zero out coefficients (feature selection)
+
+pipeline = Pipeline(steps=[('scaler', StandardScaler()), ('model', Ridge())])
+grid = GridSearchCV(estimator=Ridge(), param_grid={'alpha': [0.1, 1.0, 10.0]})</code></pre>
+    </div>
+  </section>
+
+  <!-- 06 PROJECT -->
+  <section class="module" id="project">
+    <div class="module-head">
+      <span class="section-eyebrow">06 — Applied Project</span>
+      <h2>Titanic survival prediction</h2>
+    </div>
+    <p class="lead-p">Logistic regression vs. Random Forest on the classic Titanic dataset — same accuracy, different ideas about what mattered.</p>
+
+    <div class="note-grid">
+      <div class="note-card">
+        <h3>Confusion matrix</h3>
+        <p>Visualized true vs. predicted survival outcomes with a heatmap to see exactly where the model was wrong.</p>
+      </div>
+      <div class="note-card">
+        <h3>Feature coefficients</h3>
+        <p>Pulled logistic regression coefficients, combined numeric + one-hot encoded feature names, and ranked by magnitude.</p>
+      </div>
+      <div class="note-card highlight-card">
+        <h3>The actual finding</h3>
+        <p>Logistic Regression and Random Forest scored almost identically — but flagged <em>different</em> features as important. That's a signal of correlated variables (e.g. <code>who_man</code> / <code>who_woman</code> / <code>who_child</code>), not a contradiction. Feature importance needs correlation analysis before you trust it.</p>
+      </div>
+    </div>
+
+    <div class="code-block" data-code="titanic-project">
+      <div class="code-block-head"><span>python — confusion matrix &amp; feature importance</span><button class="copy-btn">copy</button></div>
+      <pre><code># Confusion matrix
+conf_matrix = confusion_matrix(y_test, y_pred)
+plt.figure()
+sns.heatmap(conf_matrix, annot=True, cmap='Blues', fmt='d')
+plt.title('Titanic Classification Confusion Matrix')
+plt.xlabel('Predicted'); plt.ylabel('Actual')
+plt.tight_layout(); plt.show()
+
+# Feature coefficient magnitudes
+coefficients = model.best_estimator_.named_steps['classifier'].coef_[0]
+feature_names = numerical_features + list(
+    model.best_estimator_.named_steps['preprocessor']
+    .named_transformers_['cat'].named_steps['onehot']
+    .get_feature_names_out(categorical_features)
+)
+
+importance_df = pd.DataFrame({'Feature': feature_names, 'Coefficient': coefficients}) \
+    .sort_values(by='Coefficient', ascending=False, key=abs)
+
+plt.figure(figsize=(10, 6))
+plt.barh(importance_df['Feature'], importance_df['Coefficient'].abs(), color='skyblue')
+plt.gca().invert_yaxis()
+plt.title('Feature Coefficient Magnitudes — Logistic Regression')
+plt.xlabel('Coefficient Magnitude')
+plt.show()
+
+test_score = model.best_estimator_.score(X_test, y_test)
+print(f"Test set accuracy: {test_score:.2%}")</code></pre>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>Built while working through a machine learning certification — six modules, condensed.</p>
+    <p class="footer-credit">Compiled by <a href="https://www.linkedin.com/in/taha-anwar-1977231ba/" target="_blank" rel="noopener">Taha Anwar</a></p>
+  </footer>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="snippets.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
