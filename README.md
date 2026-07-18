@@ -4,7 +4,7 @@
 
 Six modules of lecture notes and cheat sheets, condensed into a single interactive site — model comparisons, "use this when..." guidance, and copy/download-ready code for every algorithm covered.
 
-**[→ Live site](#)** &nbsp;·&nbsp; built with plain HTML/CSS/JS — no framework, no build step
+Live site: https://ml-field-notes-j8wbb6f1i-taha-anwars-projects-0b5ad78f.vercel.app/ built with plain HTML/CSS/JS — no framework, no build step
 
 ---
 
